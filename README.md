@@ -5,7 +5,7 @@ Implementation of TicTacToe for the TI-84 calculator (an old hobby project). Com
 ![demo gif](tic-tac-toe.gif)
 
 ## Source files
-`TICTACTOE.txt` has the TI-BASIC code.
+`TICTACTOE.txt` has the [TI-BASIC](http://tibasicdev.wikidot.com/starter-kit) code.
 
 `TICTACTOE.8xp` has the TI84 compiled z80 assembly.
 
