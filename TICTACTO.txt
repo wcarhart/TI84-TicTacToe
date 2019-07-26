@@ -1,0 +1,170 @@
+"Intro sequence
+1->Y
+While Y<5
+ClrHome
+Output(Y,4,"TIC")
+Y+1->Y
+End
+8->Y
+While Y>3
+ClrHome
+Output(4,4,"TIC")
+Output(Y,8,"TAC")
+Y-1->Y
+End
+While Y<5
+ClrHome
+Output(4,4,"TIC")
+Output(4,8,"TAC")
+Output(Y,12,"TOE")
+Y+1->Y
+End
+rand(20)
+0->C:0->[theta]
+
+While C!=105
+If [theta]<10:Then:Output(7,3,"[PRESS ENTER]")
+Else:Output(7,3,"             ")
+End
+[theta]+1->[theta]
+If [theta]=20:0->[theta]
+getKey->C
+End
+
+"Setup board
+{0,0}->L2
+1->P:1->H:0->K
+Label A
+ClrHome
+Output(1,12,"TIC"):Output(2,13,"TAC"):Output(3,14,"TOE")
+Output(3,1,"---+---+---")
+Output(6,1,"---+---+---")
+Output(1,4,"!")
+Output(2,4,"!")
+Output(4,4,"!")
+Output(5,4,"!")
+Output(7,4,"!")
+Output(8,4,"!")
+Output(1,8,"!")
+Output(2,8,"!")
+Output(4,8,"!")
+Output(5,8,"!")
+Output(7,8,"!")
+Output(8,8,"!")
+0->W:"X"->STR1:"O"->STR2:1->X:0->N
+{0,0,0,0,0,0,0,0,0}->L1
+
+"Main game loop
+While W=0
+Output(5,13,"X")
+Output(5,15,"O")
+Output(8,12,"     ")
+If P=1:Then:Output(6,13,"^"):Output(6,15," ")
+Else:Output(6,15,"^"):Output(6,13," "):End
+
+Repeat Ans
+getKey->C
+End
+
+Output(8,12,".")
+
+If C=72:1->M
+If C=73:2->M
+If C=74:3->M
+If C=82:4->M
+If C=83:5->M
+If C=84:6->M
+If C=92:7->M
+If C=93:8->M
+If C=94:9->M
+
+Output(8,13,".")
+
+While X<10
+If L1(X)=0:Then:If P=1&M=X:Then:1->L1(X):2->P:End:End
+X+1->X
+End
+1->X
+
+Output(8,14,".")
+
+While X<10
+If L1(X)=0:Then:If P=2&M=X:Then:2->L1(X):1->P:End:End
+X+1->X
+End
+1->X
+
+Output(8,15,".")
+
+"Win checking
+If P=2:Then
+If L1(1)=1&L1(2)=1&L1(3)=1:1->W
+If L1(4)=1&L1(5)=1&L1(6)=1:1->W
+If L1(7)=1&L1(8)=1&L1(9)=1:1->W
+If L1(1)=1&L1(4)=1&L1(7)=1:1->W
+If L1(2)=1&L1(5)=1&L1(8)=1:1->W
+If L1(3)=1&L1(6)=1&L1(9)=1:1->W
+If L1(1)=1&L1(5)=1&L1(9)=1:1->W
+If L1(3)=1&L1(5)=1&L1(7)=1:1->W
+Else
+If L1(1)=2&L1(2)=2&L1(3)=2:2->W
+If L1(4)=2&L1(5)=2&L1(6)=2:2->W
+If L1(7)=2&L1(8)=2&L1(9)=2:2->W
+If L1(1)=2&L1(4)=2&L1(7)=2:2->W
+If L1(2)=2&L1(5)=2&L1(8)=2:2->W
+If L1(3)=2&L1(6)=2&L1(9)=2:2->W
+If L1(1)=2&L1(5)=2&L1(9)=2:2->W
+If L1(3)=2&L1(5)=2&L1(7)=2:2->W
+End
+
+sum(L1)->V
+If V>=13&W=0:3->W
+
+"Print out board pieces
+Output(8,16,".")
+If L1(1)=1:Output(1,2,STR1)
+If L1(1)=2:Output(1,2,STR2)
+If L1(2)=1:Output(1,6,STR1)
+If L1(2)=2:Output(1,6,STR2)
+If L1(3)=1:Output(1,10,STR1)
+If L1(3)=2:Output(1,10,STR2)
+If L1(4)=1:Output(5,2,STR1)
+If L1(4)=2:Output(5,2,STR2)
+If L1(5)=1:Output(5,6,STR1)
+If L1(5)=2:Output(5,6,STR2)
+If L1(6)=1:Output(5,10,STR1)
+If L1(6)=2:Output(5,10,STR2)
+If L1(7)=1:Output(8,2,STR1)
+If L1(7)=2:Output(8,2,STR2)
+If L1(8)=1:Output(8,6,STR1)
+If L1(8)=2:Output(8,6,STR2)
+If L1(9)=1:Output(8,10,STR1)
+If L1(9)=2:Output(8,10,STR2)
+
+End
+
+K+1->K
+remainder(K,2)->H
+
+If H=0:1->P
+If H=1:2->P
+
+Output(8,12,"     ")
+If W=1:Then:Output(7,14,STR1):Output(8,13,"WINS"):L2(1)+1->L2(1):End
+If W=2:Then:Output(7,14,STR2):Output(8,13,"WINS"):L2(2)+1->L2(2):End
+If W=3:Then:Output(7,14,"TIE"):Output(8,13,"GAME"):End
+Pause
+
+"Score screen
+ClrHome
+Output(1,4,"Score")
+Output(3,2,"X: ")
+Output(4,2,"O: ")
+Output(3,5,L2(1))
+Output(4,5,L2(2))
+Pause
+
+"Restart screen
+Menu("PLAY AGAIN?","YES",A,"NO",B)
+Label B
+ClrHome
